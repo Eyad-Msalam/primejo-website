@@ -1,0 +1,5 @@
+PRIME CMS READY
+
+بعد رفع هذا المشروع إلى GitHub وربطه بـCloudflare Pages، يمكن ربطه بـPages CMS أو Decap CMS لإدارة المحتوى والصور.
+
+المحتوى قابل للإدارة عبر content/home.json: Hero، الخدمات، من نحن، لماذا PRIME، الأعمال، Company Profile، التواصل.
