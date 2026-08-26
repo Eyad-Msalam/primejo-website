@@ -2,6 +2,8 @@ backend:
   name: github
   repo: Eyad-Msalam/primejo-website
   branch: main
+  base_url: https://prime-decap-auth.adobeeyad.workers.dev
+  auth_endpoint: /auth
 
 media_folder: "assets/media"
 public_folder: "/assets/media"
