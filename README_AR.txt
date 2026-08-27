@@ -1,9 +1,12 @@
-PRIME HOME CMS FINAL
+PRIME Decap CMS - Admin Fixed
 
-Cloudflare settings:
-Build command: node build.mjs
-Build output: dist
-Root directory: empty
-Production branch: main
+استبدل مجلد admin الموجود في مشروع primejo-website بهذا المجلد.
 
-النسخة تستخدم content/home.json كمصدر للمحتوى. أثناء البناء يتم توليد content-data.js، لذلك الموقع لا يعتمد على fetch في المتصفح ويعمل على Cloudflare وعلى المعاينة المحلية عبر file://.
+المسار النهائي:
+primejo-website/admin/index.html
+primejo-website/admin/config.yml
+
+بعد Push وDeploy:
+https://primejo.com/admin/
+
+ملحوظة: المصادقة مع GitHub تتطلب أن يكون OAuth Proxy العامل على Cloudflare شغالًا ويعالج /auth و/callback.

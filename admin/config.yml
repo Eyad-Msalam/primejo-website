@@ -5,12 +5,10 @@ backend:
   base_url: https://prime-decap-auth.adobeeyad.workers.dev
   auth_endpoint: /auth
 
-media_folder: "assets/media"
-public_folder: "/assets/media"
-
 site_url: https://primejo.com
 display_url: https://primejo.com
-logo_url: /assets/brand/prime-logo.png
+media_folder: "assets/media"
+public_folder: "/assets/media"
 
 collections:
   - name: home
@@ -21,14 +19,13 @@ collections:
         name: home_content
         format: json
         fields:
-          - label: Site
+          - label: Brand
             name: site
             widget: object
             fields:
-              - {label: Brand Name, name: brand, widget: string}
-              - {label: Logo, name: logo, widget: image}
-              - {label: Slogan, name: slogan, widget: string}
-
+              - { label: Brand Name, name: brand, widget: string }
+              - { label: Logo, name: logo, widget: image }
+              - { label: Slogan, name: slogan, widget: string }
           - label: Hero Slider
             name: hero
             widget: object
@@ -39,73 +36,66 @@ collections:
                 min: 1
                 max: 8
                 fields:
-                  - {label: Image, name: image, widget: image}
-                  - {label: Arabic Title, name: title_ar, widget: text}
-                  - {label: English Title, name: title_en, widget: text}
-                  - {label: Arabic Description, name: text_ar, widget: text}
-                  - {label: English Description, name: text_en, widget: text}
-
+                  - { label: Image, name: image, widget: image }
+                  - { label: Arabic Title, name: title_ar, widget: text }
+                  - { label: English Title, name: title_en, widget: text }
+                  - { label: Arabic Description, name: text_ar, widget: text }
+                  - { label: English Description, name: text_en, widget: text }
           - label: Services
             name: services
             widget: list
             min: 6
             max: 6
             fields:
-              - {label: Arabic Title, name: title_ar, widget: string}
-              - {label: English Title, name: title_en, widget: string}
-              - {label: Arabic Description, name: desc_ar, widget: text}
-              - {label: English Description, name: desc_en, widget: text}
-
+              - { label: Arabic Title, name: title_ar, widget: string }
+              - { label: English Title, name: title_en, widget: string }
+              - { label: Arabic Description, name: desc_ar, widget: text }
+              - { label: English Description, name: desc_en, widget: text }
           - label: About PRIME
             name: about
             widget: object
             fields:
-              - {label: Arabic Title, name: title_ar, widget: text}
-              - {label: English Title, name: title_en, widget: text}
+              - { label: Arabic Title, name: title_ar, widget: text }
+              - { label: English Title, name: title_en, widget: text }
               - label: Arabic Paragraphs
                 name: body_ar
                 widget: list
-                field: {label: Paragraph, name: paragraph, widget: text}
+                field: { label: Paragraph, name: paragraph, widget: text }
               - label: English Paragraphs
                 name: body_en
                 widget: list
-                field: {label: Paragraph, name: paragraph, widget: text}
-
+                field: { label: Paragraph, name: paragraph, widget: text }
           - label: Why PRIME
             name: why
             widget: list
             fields:
-              - {label: Arabic Title, name: title_ar, widget: string}
-              - {label: English Title, name: title_en, widget: string}
-              - {label: Arabic Description, name: desc_ar, widget: text}
-              - {label: English Description, name: desc_en, widget: text}
-
+              - { label: Arabic Title, name: title_ar, widget: string }
+              - { label: English Title, name: title_en, widget: string }
+              - { label: Arabic Description, name: desc_ar, widget: text }
+              - { label: English Description, name: desc_en, widget: text }
           - label: Our Work
             name: work
             widget: list
             fields:
-              - {label: Project Image, name: image, widget: image}
-              - {label: Category, name: category, widget: string}
-              - {label: Arabic Title, name: title_ar, widget: string}
-              - {label: English Title, name: title_en, widget: string}
-
+              - { label: Project Image, name: image, widget: image }
+              - { label: Category, name: category, widget: string }
+              - { label: Arabic Title, name: title_ar, widget: string }
+              - { label: English Title, name: title_en, widget: string }
           - label: Company Profile
             name: profile
             widget: object
             fields:
-              - {label: Arabic Title, name: title_ar, widget: text}
-              - {label: English Title, name: title_en, widget: text}
-              - {label: Arabic Text, name: body_ar, widget: text}
-              - {label: English Text, name: body_en, widget: text}
-
+              - { label: Arabic Title, name: title_ar, widget: text }
+              - { label: English Title, name: title_en, widget: text }
+              - { label: Arabic Text, name: body_ar, widget: text }
+              - { label: English Text, name: body_en, widget: text }
           - label: Contact
             name: contact
             widget: object
             fields:
-              - {label: Email, name: email, widget: string}
-              - {label: WhatsApp, name: whatsapp, widget: string}
-              - {label: Website, name: website, widget: string}
-
+              - { label: Email, name: email, widget: string }
+              - { label: WhatsApp, name: whatsapp, widget: string }
+              - { label: Website, name: website, widget: string }
   - name: pages
     label: Pages
     folder: "content/pages"
@@ -114,10 +104,10 @@ collections:
     format: json
     extension: "json"
     fields:
-      - {label: Arabic Title, name: title_ar, widget: string}
-      - {label: English Title, name: title_en, widget: string}
-      - {label: Arabic Content, name: content_ar, widget: markdown}
-      - {label: English Content, name: content_en, widget: markdown}
-      - {label: Cover Image, name: cover_image, widget: image, required: false}
-      - {label: SEO Description AR, name: seo_ar, widget: text, required: false}
-      - {label: SEO Description EN, name: seo_en, widget: text, required: false}
+      - { label: Arabic Title, name: title_ar, widget: string }
+      - { label: English Title, name: title_en, widget: string }
+      - { label: Arabic Content, name: content_ar, widget: markdown }
+      - { label: English Content, name: content_en, widget: markdown }
+      - { label: Cover Image, name: cover_image, widget: image, required: false }
+      - { label: SEO Description AR, name: seo_ar, widget: text, required: false }
+      - { label: SEO Description EN, name: seo_en, widget: text, required: false }
