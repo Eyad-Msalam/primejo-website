@@ -1,12 +1,438 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
-    <title>PRIME Content Manager</title>
-  </head>
-  <body>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>PRIME Content Manager</title>
+</head>
+
+<body>
+
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <script>
+    (function () {
+
+      function getImageUrl(value) {
+        if (!value) return "";
+
+        var url = String(value);
+
+        if (
+          url.indexOf("http://") === 0 ||
+          url.indexOf("https://") === 0
+        ) {
+          return url;
+        }
+
+        if (url.charAt(0) === "/") {
+          return url;
+        }
+
+        return "/" + url;
+      }
+
+      function cleanText(value) {
+        if (value == null) return "";
+
+        return String(value)
+          .replace(/<br\s*\/?>/gi, "\n")
+          .replace(/<\/?span[^>]*>/gi, "");
+      }
+
+      var HomePreview = createClass({
+
+        render: function () {
+
+          var data = this.props.entry
+            .get("data")
+            .toJS();
+
+          var site = data.site || {};
+          var hero = data.hero || {};
+          var slides = hero.slides || [];
+
+          var first = slides[0] || {};
+
+          var logo = getImageUrl(site.logo);
+          var image = getImageUrl(first.image);
+
+          var arabicTitle =
+            cleanText(first.title_ar);
+
+          var englishTitle =
+            cleanText(first.title_en);
+
+          var arabicDescription =
+            cleanText(first.text_ar);
+
+          var englishDescription =
+            cleanText(first.text_en);
+
+          return h(
+            "div",
+            {
+              style: {
+                margin: 0,
+                padding: 0,
+                background: "#050505",
+                color: "#ffffff",
+                fontFamily:
+                  "Arial, Helvetica, sans-serif",
+                minHeight: "100vh"
+              }
+            },
+
+            h(
+              "section",
+              {
+                style: {
+                  position: "relative",
+                  minHeight: "720px",
+                  overflow: "hidden",
+                  backgroundImage:
+                    image
+                      ? "url('" +
+                        image.replace(/'/g, "%27") +
+                        "')"
+                      : "none",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center center"
+                }
+              },
+
+              h(
+                "div",
+                {
+                  style: {
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.60) 48%, rgba(0,0,0,.18) 100%)"
+                  }
+                }
+              ),
+
+              h(
+                "div",
+                {
+                  style: {
+                    position: "relative",
+                    zIndex: 2,
+                    minHeight: "720px",
+                    padding: "32px 42px",
+                    boxSizing: "border-box",
+                    display: "flex",
+                    flexDirection: "column"
+                  }
+                },
+
+                /* Header */
+
+                h(
+                  "header",
+                  {
+                    style: {
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent:
+                        "space-between",
+                      gap: "25px"
+                    }
+                  },
+
+                  h(
+                    "img",
+                    {
+                      src: logo,
+                      alt: "PRIME",
+                      style: {
+                        width: "190px",
+                        maxHeight: "75px",
+                        objectFit: "contain"
+                      }
+                    }
+                  ),
+
+                  h(
+                    "nav",
+                    {
+                      style: {
+                        display: "flex",
+                        gap: "22px",
+                        alignItems: "center",
+                        fontSize: "12px",
+                        fontWeight: "700",
+                        whiteSpace: "nowrap"
+                      }
+                    },
+
+                    h("span", null, "HOME"),
+                    h("span", null, "SERVICES"),
+                    h("span", null, "ABOUT US"),
+                    h("span", null, "OUR WORK"),
+                    h("span", null, "COMPANY PROFILE"),
+                    h("span", null, "CONTACT US")
+                  )
+                ),
+
+                /* Hero Content */
+
+                h(
+                  "div",
+                  {
+                    style: {
+                      marginTop: "110px",
+                      maxWidth: "720px"
+                    }
+                  },
+
+                  h(
+                    "div",
+                    {
+                      style: {
+                        fontSize: "13px",
+                        fontWeight: "700",
+                        letterSpacing: "3px",
+                        marginBottom: "22px",
+                        opacity: ".95"
+                      }
+                    },
+                    "PRIME • ADVERTISING SOLUTIONS"
+                  ),
+
+                  /* Arabic Title */
+
+                  h(
+                    "h1",
+                    {
+                      style: {
+                        margin: "0 0 12px",
+                        fontSize: "56px",
+                        lineHeight: "1.08",
+                        fontWeight: "800",
+                        whiteSpace: "pre-line",
+                        direction: "rtl",
+                        textAlign: "left"
+                      }
+                    },
+                    arabicTitle
+                  ),
+
+                  /* English Title */
+
+                  h(
+                    "h2",
+                    {
+                      style: {
+                        margin: "0 0 28px",
+                        fontSize: "38px",
+                        lineHeight: "1.08",
+                        fontWeight: "800",
+                        whiteSpace: "pre-line",
+                        textTransform: "uppercase"
+                      }
+                    },
+                    englishTitle
+                  ),
+
+                  /* Arabic Description */
+
+                  h(
+                    "p",
+                    {
+                      style: {
+                        margin: "0 0 12px",
+                        maxWidth: "680px",
+                        fontSize: "19px",
+                        lineHeight: "1.65",
+                        direction: "rtl",
+                        textAlign: "left",
+                        whiteSpace: "pre-line"
+                      }
+                    },
+                    arabicDescription
+                  ),
+
+                  /* English Description */
+
+                  h(
+                    "p",
+                    {
+                      style: {
+                        margin: "0 0 30px",
+                        maxWidth: "680px",
+                        fontSize: "17px",
+                        lineHeight: "1.65",
+                        opacity: ".92",
+                        whiteSpace: "pre-line"
+                      }
+                    },
+                    englishDescription
+                  ),
+
+                  /* Buttons */
+
+                  h(
+                    "div",
+                    {
+                      style: {
+                        display: "flex",
+                        gap: "12px",
+                        flexWrap: "wrap"
+                      }
+                    },
+
+                    h(
+                      "a",
+                      {
+                        href: "#",
+                        style: {
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding:
+                            "15px 24px",
+                          border:
+                            "1px solid rgba(255,255,255,.7)",
+                          color: "#fff",
+                          textDecoration: "none",
+                          fontSize: "13px",
+                          fontWeight: "700",
+                          letterSpacing: "1px"
+                        }
+                      },
+                      "DISCOVER MORE →"
+                    ),
+
+                    h(
+                      "a",
+                      {
+                        href: "#",
+                        style: {
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding:
+                            "15px 24px",
+                          background: "#d90000",
+                          border:
+                            "1px solid #d90000",
+                          color: "#fff",
+                          textDecoration: "none",
+                          fontSize: "13px",
+                          fontWeight: "700",
+                          letterSpacing: "1px"
+                        }
+                      },
+                      "OUR WORK →"
+                    )
+                  )
+                ),
+
+                /* Slider Dots */
+
+                h(
+                  "div",
+                  {
+                    style: {
+                      marginTop: "auto",
+                      display: "flex",
+                      justifyContent:
+                        "center",
+                      alignItems: "center",
+                      gap: "10px",
+                      paddingTop: "30px"
+                    }
+                  },
+
+                  slides.map(
+                    function (_, index) {
+
+                      return h(
+                        "span",
+                        {
+                          key: index,
+                          style: {
+                            display: "block",
+                            width:
+                              index === 0
+                                ? "28px"
+                                : "8px",
+                            height: "8px",
+                            borderRadius: "99px",
+                            background:
+                              index === 0
+                                ? "#e00000"
+                                : "#ffffff",
+                            opacity:
+                              index === 0
+                                ? "1"
+                                : ".8"
+                          }
+                        }
+                      );
+
+                    }
+                  )
+
+                )
+
+              )
+
+            ),
+
+            /* Content Information */
+
+            h(
+              "div",
+              {
+                style: {
+                  background: "#ffffff",
+                  color: "#111111",
+                  padding: "20px 40px",
+                  fontSize: "14px",
+                  lineHeight: "1.7"
+                }
+              },
+
+              h("strong", null, "Arabic Title: "),
+              arabicTitle,
+
+              h("br"),
+
+              h("strong", null, "English Title: "),
+              englishTitle,
+
+              h("br"),
+
+              h("strong", null, "Arabic Description: "),
+              arabicDescription,
+
+              h("br"),
+
+              h("strong", null, "English Description: "),
+              englishDescription
+            )
+          );
+        }
+      });
+
+      CMS.registerPreviewTemplate(
+        "home_content",
+        HomePreview
+      );
+
+      CMS.registerPreviewStyle(
+        "data:text/css;charset=utf-8," +
+        encodeURIComponent(
+          "html,body{margin:0;padding:0;background:#050505;}"
+        )
+      );
+
+    })();
+  </script>
+
+</body>
 </html>
