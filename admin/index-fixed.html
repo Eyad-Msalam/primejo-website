@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRIME Advertising Solutions</title>
+<meta id="metaDescription" name="description" content="PRIME Advertising Solutions">
+<meta name="theme-color" content="#333333">
+<link rel="preload" href="assets/hero/hero-main.jpg" as="image">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header"><div class="container header-inner">
+<a class="brand" href="#home"><img id="brandLogo" src="assets/brand/prime-logo.png" alt="PRIME Advertising Solutions"></a>
+<button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+<nav class="nav" id="nav"><a class="active" href="#home">الرئيسية</a><a href="#services">خدماتنا</a><a href="#about">من نحن</a><a href="#work">أعمالنا</a><a href="#profile">ملف الشركة</a><a href="#contact">تواصل معنا</a></nav>
+<div class="head-actions"><a class="quote-btn" href="#quote">اطلب عرض سعر</a><button class="lang-btn" id="langBtn" type="button">EN</button></div>
+</div></header>
+<main id="app"></main>
+<footer class="footer"><div class="container footer-inner"><img id="footerLogo" src="assets/brand/prime-logo.png" alt="PRIME" class="footer-logo"><div id="footerSlogan"></div><small>© 2026 PRIME Advertising Solutions</small></div></footer>
+
+<script>
+(async function () {
+  try {
+    const response = await fetch('/content/home.json?v=' + Date.now(), {
+      cache: 'no-store'
+    });
+    if (!response.ok) throw new Error('content/home.json: ' + response.status);
+
+    const data = await response.json();
+    window.PRIME_DATA = data;
+
+    const script = document.createElement('script');
+    script.src = '/script.js?v=' + Date.now();
+    script.onload = function () {};
+    script.onerror = function () {
+      console.error('Could not load script.js');
+    };
+    document.body.appendChild(script);
+  } catch (error) {
+    console.error(error);
+
+    const fallback = document.createElement('script');
+    fallback.src = '/content-data.js?v=' + Date.now();
+    fallback.onload = function () {
+      const script = document.createElement('script');
+      script.src = '/script.js?v=' + Date.now();
+      document.body.appendChild(script);
+    };
+    document.body.appendChild(fallback);
+  }
+})();
+</script>
+
+</body>
+</html>
