@@ -1,1 +1,172 @@
-
+window.PRIME_DATA={
+  "site": {
+    "brand": "PRIME Advertising Solutions",
+    "logo": "assets/brand/prime-logo.png",
+    "slogan": "INSPIRE • PROMOTE • SUCCEED"
+  },
+  "hero": {
+    "slides": [
+      {
+        "image": "assets/hero/hero-main.jpg",
+        "title_ar": "نصنع حضورًا<br><span>يُحفظ.</span>",
+        "title_en": "MAKE<br><span>YOUR BRAND</span><br>STAND OUT.",
+        "text_ar": "حلول إعلانية متكاملة تساعد علامتك التجارية على الظهور، التواصل، والوصول إلى جمهورك بأثر واضح.",
+        "text_en": "Integrated advertising solutions that help your brand stand out, communicate clearly and create lasting impact."
+      },
+      {
+        "image": "assets/hero/signage.jpg",
+        "title_ar": "لوحات<br><span>تُلفت الانتباه.</span>",
+        "title_en": "SIGNAGE<br><span>THAT STANDS OUT.</span>",
+        "text_ar": "حلول للإعلانات الخارجية والواجهات واللوحات المميزة.",
+        "text_en": "Outdoor signage and facade solutions designed to be noticed."
+      },
+      {
+        "image": "assets/hero/promotional.jpg",
+        "title_ar": "مواد دعائية<br><span>تحمل اسمك.</span>",
+        "title_en": "PROMOTIONAL<br><span>THAT REPRESENTS.</span>",
+        "text_ar": "منتجات ترويجية وهدايا مرتبطة بهوية علامتك.",
+        "text_en": "Promotional products and gifts built around your brand identity."
+      },
+      {
+        "image": "assets/hero/exhibitions.jpg",
+        "title_ar": "تجربة<br><span>لا تُنسى.</span>",
+        "title_en": "EXPERIENCES<br><span>PEOPLE REMEMBER.</span>",
+        "text_ar": "معارض وفعاليات وستاندات من التصميم إلى التنفيذ.",
+        "text_en": "Exhibitions, events and stands from concept to execution."
+      },
+      {
+        "image": "assets/hero/printing.jpg",
+        "title_ar": "طباعة<br><span>تُظهر التفاصيل.</span>",
+        "title_en": "PRINT<br><span>THAT SHOWS DETAIL.</span>",
+        "text_ar": "طباعة رقمية وكبيرة الحجم بجودة مناسبة للمشروع.",
+        "text_en": "Digital and large-format printing for professional results."
+      },
+      {
+        "image": "assets/hero/digital.jpg",
+        "title_ar": "حلول رقمية<br><span>أكثر حضورًا.</span>",
+        "title_en": "DIGITAL<br><span>MORE VISIBLE.</span>",
+        "text_ar": "شاشات وإعلانات رقمية تعزز ظهور الرسالة.",
+        "text_en": "Digital display solutions that amplify the message."
+      }
+    ]
+  },
+  "services": [
+    {
+      "title_ar": "الإعلانات الخارجية",
+      "title_en": "Outdoor Advertising",
+      "desc_ar": "لوحات، واجهات، حروف مضيئة وحلول ظهور للعلامات التجارية.",
+      "desc_en": "Signs, facades, illuminated letters and branded visibility solutions."
+    },
+    {
+      "title_ar": "الطباعة",
+      "title_en": "Printing",
+      "desc_ar": "طباعة رقمية وكبيرة الحجم، بانرات ومواد مطبوعة للمشاريع.",
+      "desc_en": "Digital and large-format printing, banners and project materials."
+    },
+    {
+      "title_ar": "المعارض والفعاليات",
+      "title_en": "Exhibitions & Events",
+      "desc_ar": "تصميم وتجهيز أجنحة المعارض والستاندات والفعاليات.",
+      "desc_en": "Exhibition stands, displays and event environments from concept to setup."
+    },
+    {
+      "title_ar": "التصميم والهوية",
+      "title_en": "Design & Branding",
+      "desc_ar": "هوية بصرية، تطبيقات للعلامة وتصميمات إعلانية.",
+      "desc_en": "Visual identity, brand applications and advertising design."
+    },
+    {
+      "title_ar": "الديكورات",
+      "title_en": "Interior Design",
+      "desc_ar": "هوية داخلية وديكورات للمكاتب والمتاجر والمساحات التجارية.",
+      "desc_en": "Interior branding and décor for offices, stores and commercial spaces."
+    },
+    {
+      "title_ar": "المنتجات الدعائية",
+      "title_en": "Promotional Products",
+      "desc_ar": "هدايا وملابس ومواد دعائية مخصصة حسب هوية المشروع.",
+      "desc_en": "Custom gifts, uniforms and promotional products aligned with your brand."
+    }
+  ],
+  "about": {
+    "title_ar": "من الفكرة<br><span>إلى التنفيذ.</span>",
+    "title_en": "From idea<br><span>to execution.</span>",
+    "body_ar": [
+      "مؤسسة مصادر الإبداع لتجارة المواد الدعائية – PRIME Advertising Solutions هي مؤسسة أردنية متخصصة في حلول الدعاية والإعلان والتصميم والتنفيذ.",
+      "نربط الفكرة بالتصميم والتنفيذ لنقدم حلولًا متكاملة تساعد العلامات التجارية على الظهور بصورة احترافية."
+    ],
+    "body_en": [
+      "PRIME Advertising Solutions is a Jordanian company specializing in advertising, design, printing, branding and complete execution.",
+      "We connect concept, design and execution to deliver integrated solutions that help brands appear with confidence."
+    ]
+  },
+  "why": [
+    {
+      "title_ar": "إبداع",
+      "title_en": "Creativity",
+      "desc_ar": "أفكار تصنع الفرق.",
+      "desc_en": "Ideas that create the difference."
+    },
+    {
+      "title_ar": "جودة",
+      "title_en": "Quality",
+      "desc_ar": "تفاصيل تستحق الثقة.",
+      "desc_en": "Details you can trust."
+    },
+    {
+      "title_ar": "تنفيذ",
+      "title_en": "Execution",
+      "desc_ar": "من الفكرة حتى التركيب.",
+      "desc_en": "From concept to installation."
+    },
+    {
+      "title_ar": "التزام",
+      "title_en": "Commitment",
+      "desc_ar": "نلتزم بالنتيجة والموعد.",
+      "desc_en": "Committed to results and deadlines."
+    },
+    {
+      "title_ar": "حلول متكاملة",
+      "title_en": "Integrated Solutions",
+      "desc_ar": "خدمة متصلة من البداية للنهاية.",
+      "desc_en": "Connected service from start to finish."
+    }
+  ],
+  "work": [
+    {
+      "image": "assets/hero/signage.jpg",
+      "category": "SIGNAGE",
+      "title_ar": "إعلانات وواجهات",
+      "title_en": "Signs & Facades"
+    },
+    {
+      "image": "assets/hero/exhibitions.jpg",
+      "category": "EVENTS",
+      "title_ar": "معارض وفعاليات",
+      "title_en": "Exhibitions & Events"
+    },
+    {
+      "image": "assets/hero/printing.jpg",
+      "category": "PRINTING",
+      "title_ar": "الطباعة",
+      "title_en": "Printing"
+    },
+    {
+      "image": "assets/hero/promotional.jpg",
+      "category": "PROMO",
+      "title_ar": "منتجات دعائية",
+      "title_en": "Promotional Products"
+    }
+  ],
+  "profile": {
+    "title_ar": "تعرف على PRIME<br><span>بشكل أوسع.</span>",
+    "title_en": "Get to know PRIME<br><span>in more detail.</span>",
+    "body_ar": "معلومات الشركة، خدماتنا، قدراتنا وأعمالنا في Company Profile واحد.",
+    "body_en": "Our company, capabilities, services and work — brought together in one profile."
+  },
+  "contact": {
+    "email": "info@primejo.com",
+    "whatsapp": "+962 78 200 32 30",
+    "website": "primejo.com"
+  }
+};
