@@ -1,747 +1,136 @@
-let DATA, current = 0, slides = [];
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap');
 
-const state = {
-  lang: localStorage.getItem('primeLang') || 'ar'
-};
-
-const t = (a, e) => state.lang === 'ar' ? a : e;
-
-const s = x =>
-  String(x ?? '').replace(
-    /[&<>\\"]/g,
-    c => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      '\\': '&#039;'
-    }[c])
-  );
-
-async function init() {
-  try {
-    const response = await fetch('content/home.json', {
-      cache: 'no-store'
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        'Could not load content/home.json: ' +
-        response.status
-      );
-    }
-
-    DATA = await response.json();
-
-    render();
-  } catch (error) {
-    console.error(error);
-
-    document.getElementById('app').innerHTML = `
-      <div style="
-        padding:60px;
-        color:#fff;
-        background:#111;
-        font-family:Arial;
-        text-align:center;
-      ">
-        <h2>Unable to load website content</h2>
-        <p>Please refresh the page.</p>
-      </div>
-    `;
-  }
+:root{
+  --bg:#0b0b0c;--bg-soft:#111113;--panel:#151517;--text:#f5f5f5;
+  --muted:#a4a4a8;--line:rgba(255,255,255,.10);--red:#e51b23;
+  --red-dark:#b80f16;--max:1240px;
 }
-
-function render() {
-  document.documentElement.lang = state.lang;
-  document.documentElement.dir =
-    state.lang === 'ar' ? 'rtl' : 'ltr';
-
-  brandLogo.src = DATA.site.logo;
-  footerLogo.src = DATA.site.logo;
-  footerSlogan.textContent = DATA.site.slogan;
-
-  const hs = DATA.hero.slides
-    .map(
-      (x, i) =>
-        `<div class="hero-slide${i ? '' : ' active'}" style="background-image:url('${x.image}')"></div>`
-    )
-    .join('');
-
-  const ix = DATA.hero.slides
-    .map(
-      (_, i) =>
-        `<div class="index-item${i ? '' : ' active'}">${String(
-          i + 1
-        ).padStart(2, '0')}</div>`
-    )
-    .join('');
-
-  const sv = DATA.services
-    .map(
-      (x, i) =>
-        `<a href="#services">
-          <span class="strip-icon">
-            ${['▣', '▤', '⌂', '✦', '◈', '◆'][i]}
-          </span>
-          <b>${s(t(x.title_ar, x.title_en))}</b>
-          <small>${s(
-            t(
-              [
-                'لوحات وواجهات',
-                'رقمية وكبيرة الحجم',
-                'ستاندات وتجهيز',
-                'هوية وتطبيقات',
-                'هوية المساحات',
-                'هدايا ومواد ترويجية'
-              ][i],
-              [
-                'Signs & Facades',
-                'Digital & Large Format',
-                'Stands & Setup',
-                'Identity & Applications',
-                'Space Branding',
-                'Gifts & Promo Items'
-              ][i]
-            )
-          )}</small>
-        </a>`
-    )
-    .join('');
-
-  const sc = DATA.services
-    .map(
-      (x, i) =>
-        `<article class="service-card">
-          <div class="card-no">0${i + 1}</div>
-          <div class="card-icon">
-            ${['▣', '▤', '⌂', '✦', '◈', '◆'][i]}
-          </div>
-          <h3>${s(t(x.title_ar, x.title_en))}</h3>
-          <p>${s(t(x.desc_ar, x.desc_en))}</p>
-        </article>`
-    )
-    .join('');
-
-  const wy = DATA.why
-    .map(
-      (x, i) =>
-        `<article>
-          <div class="why-icon">
-            ${['✦', '◇', '↗', '◌', '▦'][i]}
-          </div>
-          <h3>${s(t(x.title_ar, x.title_en))}</h3>
-          <p>${s(t(x.desc_ar, x.desc_en))}</p>
-        </article>`
-    )
-    .join('');
-
-  const wk = DATA.work
-    .map(
-      (x, i) =>
-        `<div class="work-card${i ? '' : ' wide'}">
-          <img
-            src="${x.image}"
-            alt="${s(t(x.title_ar, x.title_en))}"
-          >
-          <div>
-            <small>${s(x.category)}</small>
-            <strong>${s(t(x.title_ar, x.title_en))}</strong>
-          </div>
-        </div>`
-    )
-    .join('');
-
-  document.getElementById('app').innerHTML = `
-    <section class="hero" id="home">
-
-      <div class="hero-bg">
-        ${hs}
-      </div>
-
-      <div class="hero-overlay"></div>
-
-      <div class="container hero-inner">
-
-        <div class="hero-copy">
-
-          <div class="hero-kicker">
-            PRIME • ADVERTISING SOLUTIONS
-          </div>
-
-          <div id="heroText"></div>
-
-          <div class="hero-actions">
-
-            <a
-              class="primary-cta"
-              href="#services"
-            >
-              ${t(
-                'استكشف خدماتنا →',
-                'Explore Services →'
-              )}
-            </a>
-
-            <a
-              class="secondary-cta"
-              href="#work"
-            >
-              ${t(
-                'شاهد أعمالنا →',
-                'See Our Work →'
-              )}
-            </a>
-
-          </div>
-
-        </div>
-
-        <div class="hero-index">
-          ${ix}
-        </div>
-
-        <div class="hero-dots">
-
-          <button
-            class="arrow"
-            id="prev"
-          >
-            ‹
-          </button>
-
-          <div id="dots"></div>
-
-          <button
-            class="arrow"
-            id="next"
-          >
-            ›
-          </button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="service-strip">
-      <div class="container service-strip-grid">
-        ${sv}
-      </div>
-    </section>
-
-    <section
-      class="section services"
-      id="services"
-    >
-      <div class="container">
-
-        <div class="section-head">
-
-          <div class="eyebrow">
-            WHAT WE DO
-          </div>
-
-          <h2>
-            ${t(
-              'حلول إعلانية <span>متكاملة.</span>',
-              'Advertising solutions<br><span>built to perform.</span>'
-            )}
-          </h2>
-
-          <p>
-            ${t(
-              'ست خدمات أساسية نركز فيها على الإبداع، الجودة والتنفيذ المتكامل.',
-              'Six core services focused on creativity, quality and complete execution.'
-            )}
-          </p>
-
-        </div>
-
-        <div class="services-grid">
-          ${sc}
-        </div>
-
-      </div>
-    </section>
-
-    <section
-      class="section about"
-      id="about"
-    >
-      <div class="container about-grid">
-
-        <div class="about-visual">
-
-          <img
-            src="assets/hero/hero-main.jpg"
-            alt="PRIME"
-          >
-
-          <div class="about-overlay"></div>
-
-          <div class="about-mark">
-            PRIME
-          </div>
-
-        </div>
-
-        <div class="about-copy">
-
-          <div class="eyebrow">
-            ABOUT PRIME
-          </div>
-
-          <h2>
-            ${t(
-              DATA.about.title_ar,
-              DATA.about.title_en
-            )}
-          </h2>
-
-          ${
-            (state.lang === 'ar'
-              ? DATA.about.body_ar
-              : DATA.about.body_en
-            )
-              .map(
-                p => `<p>${s(p)}</p>`
-              )
-              .join('')
-          }
-
-          <a
-            class="outline-link"
-            href="#profile"
-          >
-            ${t(
-              'اعرف أكثر عن PRIME →',
-              'Learn More About PRIME →'
-            )}
-          </a>
-
-        </div>
-
-      </div>
-    </section>
-
-    <section
-      class="section why"
-      id="why"
-    >
-      <div class="container">
-
-        <div class="section-head center">
-
-          <div class="eyebrow">
-            WHY PRIME
-          </div>
-
-          <h2>
-            ${t(
-              'ليش <span>PRIME؟</span>',
-              'Why choose <span>PRIME?</span>'
-            )}
-          </h2>
-
-        </div>
-
-        <div class="why-grid">
-          ${wy}
-        </div>
-
-      </div>
-    </section>
-
-    <section
-      class="section work"
-      id="work"
-    >
-      <div class="container">
-
-        <div class="section-head">
-
-          <div class="eyebrow">
-            OUR WORK
-          </div>
-
-          <h2>
-            ${t(
-              'أعمالنا <span>تتكلم.</span>',
-              'Our work<br><span>speaks for itself.</span>'
-            )}
-          </h2>
-
-          <p>
-            ${t(
-              'أضف مشاريع PRIME الحقيقية من لوحة التحكم وارفع الصور مباشرة.',
-              'Add PRIME’s real projects from the CMS and upload project images directly.'
-            )}
-          </p>
-
-        </div>
-
-        <div class="work-grid">
-          ${wk}
-        </div>
-
-      </div>
-    </section>
-
-    <section
-      class="section profile"
-      id="profile"
-    >
-      <div class="container profile-box">
-
-        <div>
-
-          <div class="eyebrow">
-            COMPANY PROFILE
-          </div>
-
-          <h2>
-            ${t(
-              DATA.profile.title_ar,
-              DATA.profile.title_en
-            )}
-          </h2>
-
-          <p>
-            ${s(
-              t(
-                DATA.profile.body_ar,
-                DATA.profile.body_en
-              )
-            )}
-          </p>
-
-        </div>
-
-        <a
-          class="primary-cta"
-          href="#contact"
-        >
-          ${t(
-            'طلب ملف الشركة →',
-            'Request Company Profile →'
-          )}
-        </a>
-
-      </div>
-    </section>
-
-    <section
-      class="section quote"
-      id="quote"
-    >
-      <div class="container quote-box">
-
-        <div>
-
-          <div class="eyebrow">
-            REQUEST A QUOTE
-          </div>
-
-          <h2>
-            ${t(
-              'جاهز نبدأ<br><span>مشروعك؟</span>',
-              'Ready to start<br><span>your project?</span>'
-            )}
-          </h2>
-
-          <p>
-            ${t(
-              'أرسل تفاصيل مشروعك وسنتواصل معك.',
-              'Send us your project details and we’ll get back to you.'
-            )}
-          </p>
-
-        </div>
-
-        <form id="quoteForm">
-
-          <div class="row">
-
-            <input
-              required
-              placeholder="${t(
-                'الاسم الكامل',
-                'Full name'
-              )}"
-            >
-
-            <input
-              required
-              placeholder="${t(
-                'رقم الهاتف',
-                'Phone number'
-              )}"
-            >
-
-          </div>
-
-          <input
-            type="email"
-            placeholder="${t(
-              'البريد الإلكتروني',
-              'Email address'
-            )}"
-          >
-
-          <select>
-            ${DATA.services
-              .map(
-                x =>
-                  `<option>
-                    ${s(
-                      t(
-                        x.title_ar,
-                        x.title_en
-                      )
-                    )}
-                  </option>`
-              )
-              .join('')}
-          </select>
-
-          <textarea
-            required
-            placeholder="${t(
-              'تفاصيل المشروع',
-              'Project details'
-            )}"
-          ></textarea>
-
-          <button
-            class="primary-cta"
-            type="submit"
-          >
-            ${t(
-              'إرسال الطلب →',
-              'Send Request →'
-            )}
-          </button>
-
-        </form>
-
-      </div>
-    </section>
-
-    <section
-      class="section contact"
-      id="contact"
-    >
-      <div class="container contact-grid">
-
-        <div>
-
-          <div class="eyebrow">
-            CONTACT PRIME
-          </div>
-
-          <h2>
-            ${t(
-              'خلينا نحوّل<br><span>فكرتك إلى واقع.</span>',
-              'Let’s turn your<br><span>idea into reality.</span>'
-            )}
-          </h2>
-
-        </div>
-
-        <div class="contact-info">
-
-          <a
-            href="mailto:${s(
-              DATA.contact.email
-            )}"
-          >
-            <small>EMAIL</small>
-            <strong>
-              ${s(DATA.contact.email)}
-            </strong>
-          </a>
-
-          <a
-            href="https://wa.me/962782003230"
-            target="_blank"
-          >
-            <small>WHATSAPP</small>
-            <strong>
-              ${s(DATA.contact.whatsapp)}
-            </strong>
-          </a>
-
-          <a
-            href="https://${s(
-              DATA.contact.website
-            )}"
-          >
-            <small>WEBSITE</small>
-            <strong>
-              ${s(DATA.contact.website)}
-            </strong>
-          </a>
-
-        </div>
-
-      </div>
-    </section>
-  `;
-
-  setup();
-
-  document.getElementById('langBtn').textContent =
-    state.lang === 'ar' ? 'EN' : 'عربي';
-
-  document.getElementById('langBtn').onclick = () => {
-    state.lang =
-      state.lang === 'ar' ? 'en' : 'ar';
-
-    localStorage.setItem(
-      'primeLang',
-      state.lang
-    );
-
-    render();
-  };
-
-  document.querySelector(
-    '.menu-toggle'
-  ).onclick = () => {
-    const n =
-      document.getElementById('nav');
-
-    n.classList.toggle(
-      'mobile-open'
-    );
-  };
-
-  document.getElementById(
-    'quoteForm'
-  ).onsubmit = e => {
-    e.preventDefault();
-
-    alert(
-      t(
-        'تم استلام طلبك مبدئيًا.',
-        'Your request was received.'
-      )
-    );
-
-    e.currentTarget.reset();
-  };
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Cairo',Arial,sans-serif;line-height:1.7;overflow-x:hidden}
+body,button,input,select,textarea{font-family:'Cairo',Arial,sans-serif}
+a{color:inherit;text-decoration:none} button,input,select,textarea{font:inherit} button{cursor:pointer}
+img{max-width:100%;display:block} ::selection{background:var(--red);color:#fff}
+.container{width:min(calc(100% - 48px),var(--max));margin-inline:auto}
+
+.site-header{position:fixed;inset:0 0 auto;z-index:1000;background:rgba(8,8,9,.82);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.header-inner{min-height:84px;display:flex;align-items:center;gap:28px}
+.brand{display:inline-flex;align-items:center;flex:0 0 auto}.brand img{width:156px;height:auto;object-fit:contain}
+.nav{display:flex;align-items:center;justify-content:center;gap:26px;margin-inline:auto}
+.nav a{position:relative;color:#d8d8da;font-size:14px;font-weight:600;padding:8px 0;transition:color .25s ease}
+.nav a:after{content:'';position:absolute;right:0;bottom:0;width:0;height:2px;background:var(--red);transition:width .25s ease}
+.nav a:hover,.nav a.active{color:#fff}.nav a:hover:after,.nav a.active:after{width:100%}
+.head-actions{display:flex;align-items:center;gap:10px}
+.quote-btn,.primary-cta{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;background:var(--red);color:#fff;border:1px solid var(--red);font-size:13px;font-weight:800;transition:transform .25s ease,background .25s ease}
+.quote-btn:hover,.primary-cta:hover{background:var(--red-dark);border-color:var(--red-dark);transform:translateY(-2px)}
+.lang-btn,.menu-toggle{min-width:46px;height:46px;border:1px solid var(--line);background:transparent;color:#fff}
+.lang-btn:hover,.menu-toggle:hover{border-color:rgba(255,255,255,.3)}.menu-toggle{display:none;font-size:22px}
+
+.hero{position:relative;min-height:760px;height:min(100vh,900px);display:flex;align-items:center;isolation:isolate;overflow:hidden}
+.hero-bg,.hero-slide,.hero-overlay{position:absolute;inset:0}.hero-bg{z-index:-3;background:#090909}
+.hero-slide{background-position:center;background-size:cover;opacity:0;transform:scale(1.04);transition:opacity 1s ease,transform 7s linear}
+.hero-slide.active{opacity:1;transform:scale(1)}
+.hero-overlay{z-index:-2;background:linear-gradient(90deg,rgba(0,0,0,.86),rgba(0,0,0,.60) 45%,rgba(0,0,0,.25)),linear-gradient(0deg,rgba(0,0,0,.72),transparent 38%,rgba(0,0,0,.30))}
+[dir=rtl] .hero-overlay{background:linear-gradient(270deg,rgba(0,0,0,.86),rgba(0,0,0,.60) 45%,rgba(0,0,0,.25)),linear-gradient(0deg,rgba(0,0,0,.72),transparent 38%,rgba(0,0,0,.30))}
+.hero-inner{position:relative;width:100%;padding-top:80px}.hero-copy{max-width:720px}
+.hero-kicker,.eyebrow{color:var(--red);font-family:'Montserrat','Cairo',sans-serif;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+.hero-kicker{margin-bottom:22px}
+.hero h1{margin:0;white-space:pre-line;font-family:'Montserrat','Cairo',sans-serif;font-size:clamp(46px,6.5vw,88px);line-height:.98;letter-spacing:-3px;font-weight:800;text-transform:uppercase}
+[dir=rtl] .hero h1{font-family:'Cairo',Arial,sans-serif;text-transform:none;letter-spacing:-2px;line-height:1.08}
+.hero h1 span,.section-head h2 span,.about-copy h2 span,.profile-box h2 span,.quote-box h2 span,.contact h2 span{color:var(--red)}
+.hero p{max-width:590px;margin:25px 0 0;color:rgba(255,255,255,.78);font-size:17px;line-height:1.9}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.secondary-cta,.outline-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border:1px solid rgba(255,255,255,.35);color:#fff;font-size:13px;font-weight:700;transition:.25s ease}
+.secondary-cta:hover,.outline-link:hover{background:#fff;color:#111;border-color:#fff}
+.hero-index{position:absolute;left:0;bottom:12px;display:flex;flex-direction:column;gap:5px;font-family:'Montserrat',sans-serif}
+[dir=rtl] .hero-index{left:auto;right:0}.index-item{color:rgba(255,255,255,.35);font-size:11px;font-weight:700;transition:.3s ease}
+.index-item.active{color:#fff;transform:translateX(-5px)}[dir=rtl] .index-item.active{transform:translateX(5px)}
+.hero-dots{position:absolute;right:0;bottom:12px;display:flex;align-items:center;gap:8px}
+[dir=rtl] .hero-dots{right:auto;left:0}#dots{display:flex;gap:7px}
+.dot{width:26px;height:3px;border:0;padding:0;background:rgba(255,255,255,.28);transition:.3s ease}.dot.active{width:48px;background:var(--red)}
+.arrow{width:34px;height:34px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.18);color:#fff;font-size:23px;line-height:1}
+.arrow:hover{background:#fff;color:#111}
+
+.service-strip{position:relative;background:var(--red);color:#fff;z-index:2}
+.service-strip-grid{display:grid;grid-template-columns:repeat(6,1fr)}
+.service-strip a{min-height:108px;padding:20px 15px;display:flex;flex-direction:column;justify-content:center;gap:2px;border-inline-start:1px solid rgba(255,255,255,.18);transition:background .25s ease}
+.service-strip a:first-child{border-inline-start:0}.service-strip a:hover{background:rgba(0,0,0,.12)}
+.strip-icon{font-size:18px;opacity:.9;line-height:1;margin-bottom:4px}.service-strip b{font-size:13px}.service-strip small{font-family:'Montserrat',sans-serif;font-size:9px;opacity:.78}
+
+.section{padding:110px 0}.section-head{max-width:700px;margin-bottom:52px}.section-head.center{margin-inline:auto;text-align:center}
+.eyebrow{margin-bottom:13px}.section-head h2,.about-copy h2,.profile-box h2,.quote-box h2,.contact h2{margin:0;font-size:clamp(36px,4.2vw,58px);line-height:1.08;letter-spacing:-1.5px;font-weight:800}
+.section-head p{margin:18px 0 0;color:var(--muted);font-size:15px}.services{background:#0d0d0f}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.service-card{position:relative;min-height:285px;padding:34px;background:var(--panel);overflow:hidden;transition:transform .3s ease,background .3s ease}
+.service-card:after{content:'';position:absolute;right:0;bottom:0;width:4px;height:0;background:var(--red);transition:height .35s ease}
+[dir=ltr] .service-card:after{right:auto;left:0}.service-card:hover{background:#19191c;transform:translateY(-4px);z-index:1}.service-card:hover:after{height:100%}
+.card-no{color:rgba(255,255,255,.25);font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700}.card-icon{margin:32px 0 20px;color:var(--red);font-size:28px}
+.service-card h3{margin:0 0 10px;font-size:21px}.service-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.9}
+
+.about{background:var(--bg-soft)}.about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:80px;align-items:center}
+.about-visual{position:relative;min-height:560px;overflow:hidden;background:#151515}.about-visual img{width:100%;height:100%;min-height:560px;object-fit:cover;filter:saturate(.85)}
+.about-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.05),rgba(0,0,0,.72))}
+.about-mark{position:absolute;right:28px;bottom:25px;font:800 clamp(42px,6vw,78px)/1 'Montserrat',sans-serif;letter-spacing:-4px;color:rgba(255,255,255,.9)}
+[dir=ltr] .about-mark{right:auto;left:28px}.about-copy{max-width:590px}.about-copy h2{margin-bottom:26px}.about-copy p{margin:0 0 15px;color:var(--muted);font-size:15px;line-height:2}.about-copy .outline-link{margin-top:15px}
+
+.why{background:#0b0b0c}.why-grid{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.why-grid article{min-height:230px;padding:30px 24px;border-inline-start:1px solid var(--line)}.why-grid article:first-child{border-inline-start:0}
+.why-icon{color:var(--red);font-size:25px;margin-bottom:35px}.why-grid h3{margin:0 0 7px;font-size:18px}.why-grid p{margin:0;color:var(--muted);font-size:13px}
+
+.work{background:var(--bg-soft)}.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.work-card{position:relative;min-height:330px;overflow:hidden;background:#171719}.work-card.wide{grid-column:span 2;min-height:520px}
+.work-card img{width:100%;height:100%;min-height:330px;object-fit:cover;transition:transform .7s ease}.work-card.wide img{min-height:520px}
+.work-card:after{content:'';position:absolute;inset:35% 0 0;background:linear-gradient(0deg,rgba(0,0,0,.88),transparent)}
+.work-card:hover img{transform:scale(1.05)}.work-card>div{position:absolute;right:28px;bottom:25px;z-index:1}[dir=ltr] .work-card>div{right:auto;left:28px}
+.work-card small{display:block;color:var(--red);font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;margin-bottom:4px}.work-card strong{font-size:23px}
+
+.profile{background:#0b0b0c}.profile-box,.quote-box{position:relative;padding:62px;background:linear-gradient(135deg,#19191b,#111113);border:1px solid var(--line);overflow:hidden}
+.profile-box:before,.quote-box:before{content:'PRIME';position:absolute;left:-15px;bottom:-45px;font:800 180px/1 'Montserrat',sans-serif;color:rgba(255,255,255,.025);pointer-events:none}
+[dir=rtl] .profile-box:before,[dir=rtl] .quote-box:before{left:auto;right:-15px}
+.profile-box{display:flex;align-items:center;justify-content:space-between;gap:50px}.profile-box>div{position:relative;z-index:1;max-width:760px}
+.profile-box h2{margin:10px 0 14px}.profile-box p{margin:0;color:var(--muted)}.profile-box .primary-cta{position:relative;z-index:1;white-space:nowrap}
+
+.quote{background:var(--bg-soft)}.quote-box{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:center}.quote-box>div{position:relative;z-index:1}
+.quote-box h2{margin:8px 0 15px}.quote-box p{color:var(--muted);margin:0}
+#quoteForm{position:relative;z-index:1;display:grid;gap:12px}#quoteForm .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#quoteForm input,#quoteForm select,#quoteForm textarea{width:100%;border:1px solid rgba(255,255,255,.12);background:#0d0d0f;color:#fff;outline:none;padding:14px 15px;border-radius:0;transition:border-color .25s ease}
+#quoteForm input,#quoteForm select{height:50px}#quoteForm textarea{min-height:135px;resize:vertical}
+#quoteForm input::placeholder,#quoteForm textarea::placeholder{color:#77777c}#quoteForm input:focus,#quoteForm select:focus,#quoteForm textarea:focus{border-color:var(--red)}
+#quoteForm select{appearance:none}#quoteForm .primary-cta{border-radius:0;width:100%;margin-top:2px}
+
+.contact{background:var(--red);color:#fff}.contact .eyebrow{color:rgba(255,255,255,.7)}.contact h2 span{color:#111}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}.contact-info{display:grid;gap:1px;background:rgba(0,0,0,.15)}
+.contact-info a{padding:22px 24px;background:rgba(255,255,255,.08);transition:background .25s ease}.contact-info a:hover{background:rgba(255,255,255,.16)}
+.contact-info small{display:block;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:1.5px;opacity:.65}
+.contact-info strong{display:block;margin-top:2px;font-family:'Montserrat','Cairo',sans-serif;font-size:17px;direction:ltr;text-align:start}
+
+.footer{background:#070708;border-top:1px solid var(--line);padding:38px 0}.footer-inner{display:flex;align-items:center;gap:22px}
+.footer-logo{width:130px;height:auto}#footerSlogan{color:#8b8b90;font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:1.6px;margin-inline-end:auto}.footer small{color:#66666a;font-size:10px}
+
+@media(max-width:1050px){
+  .header-inner{gap:16px}.nav{gap:17px}.nav a{font-size:12px}
+  .service-strip-grid{grid-template-columns:repeat(3,1fr)}.service-strip a:nth-child(4){border-inline-start:0}.service-strip a:nth-child(n+4){border-top:1px solid rgba(255,255,255,.18)}
+  .why-grid{grid-template-columns:repeat(3,1fr)}.why-grid article:nth-child(4){border-inline-start:0;border-top:1px solid var(--line)}.why-grid article:nth-child(5){border-top:1px solid var(--line)}
+  .about-grid{gap:45px}
 }
-
-function setup() {
-  slides = [
-    ...document.querySelectorAll(
-      '.hero-slide'
-    )
-  ];
-
-  const ids = [
-    ...document.querySelectorAll(
-      '.index-item'
-    )
-  ];
-
-  const dots =
-    document.getElementById('dots');
-
-  dots.innerHTML =
-    DATA.hero.slides
-      .map(
-        (_, i) =>
-          `<button
-            class="dot${i ? '' : ' active'}"
-            data-i="${i}"
-          ></button>`
-      )
-      .join('');
-
-  dots
-    .querySelectorAll('.dot')
-    .forEach(
-      b =>
-        b.onclick = () =>
-          show(+b.dataset.i)
-    );
-
-  document.getElementById(
-    'prev'
-  ).onclick = () =>
-    show(current - 1);
-
-  document.getElementById(
-    'next'
-  ).onclick = () =>
-    show(current + 1);
-
-  show(current);
+@media(max-width:820px){
+  .container{width:min(calc(100% - 32px),var(--max))}.header-inner{min-height:72px}.brand img{width:135px}.head-actions{margin-inline-start:auto}.quote-btn{display:none}
+  .menu-toggle{display:block;order:2}.nav{position:absolute;top:calc(100% + 1px);right:16px;left:16px;display:none;flex-direction:column;align-items:stretch;gap:0;margin:0;padding:8px;background:rgba(13,13,15,.98);border:1px solid var(--line)}
+  .nav.mobile-open{display:flex}.nav a{padding:12px 14px}.nav a:after{display:none}
+  .hero{min-height:680px;height:88vh}.hero-inner{padding-top:60px}.hero h1{font-size:clamp(40px,10vw,64px)}.hero p{font-size:15px}
+  .hero-index{bottom:10px}.hero-dots{bottom:10px}.section{padding:78px 0}.services-grid{grid-template-columns:repeat(2,1fr)}
+  .about-grid,.quote-box,.contact-grid{grid-template-columns:1fr}.about-grid{gap:40px}.about-visual,.about-visual img{min-height:400px}
+  .quote-box{gap:35px}.contact-grid{gap:35px}.profile-box{flex-direction:column;align-items:flex-start}.work-card.wide{min-height:400px}.work-card.wide img{min-height:400px}
 }
-
-function show(i) {
-  current =
-    (i + slides.length) %
-    slides.length;
-
-  slides.forEach(
-    (x, n) =>
-      x.classList.toggle(
-        'active',
-        n === current
-      )
-  );
-
-  document
-    .querySelectorAll('.index-item')
-    .forEach(
-      (x, n) =>
-        x.classList.toggle(
-          'active',
-          n === current
-        )
-    );
-
-  document
-    .querySelectorAll('.dot')
-    .forEach(
-      (x, n) =>
-        x.classList.toggle(
-          'active',
-          n === current
-        )
-    );
-
-  const x =
-    DATA.hero.slides[current];
-
-  const t1 =
-    state.lang === 'ar'
-      ? x.title_ar
-      : x.title_en;
-
-  const t2 =
-    state.lang === 'ar'
-      ? x.text_ar
-      : x.text_en;
-
-  document.getElementById(
-    'heroText'
-  ).innerHTML = `
-    <h1>${t1}</h1>
-    <p>${t2}</p>
-  `;
+@media(max-width:560px){
+  .container{width:min(calc(100% - 24px),var(--max))}.head-actions{gap:6px}.lang-btn,.menu-toggle{min-width:40px;height:40px}
+  .hero{min-height:650px}.hero h1{letter-spacing:-1px}[dir=rtl] .hero h1{letter-spacing:-1px}.hero p{line-height:1.75}.hero-actions{gap:8px}
+  .primary-cta,.secondary-cta,.outline-link{padding-inline:17px}.hero-index{display:none}.hero-dots{left:0!important;right:0!important;justify-content:center}
+  .service-strip-grid{grid-template-columns:repeat(2,1fr)}.service-strip a{min-height:94px;padding:15px 12px}.service-strip a:nth-child(3),.service-strip a:nth-child(5){border-inline-start:0}.service-strip a:nth-child(n+3){border-top:1px solid rgba(255,255,255,.18)}
+  .section-head{margin-bottom:35px}.section-head h2,.about-copy h2,.profile-box h2,.quote-box h2,.contact h2{font-size:36px}
+  .services-grid,.work-grid{grid-template-columns:1fr}.work-card.wide{grid-column:auto;min-height:330px}.work-card.wide img{min-height:330px}.work-card,.work-card img{min-height:280px}
+  .why-grid{grid-template-columns:1fr 1fr}.why-grid article:nth-child(odd){border-inline-start:0}.why-grid article{min-height:190px;padding:24px 18px}.why-icon{margin-bottom:25px}
+  .profile-box,.quote-box{padding:32px 22px}#quoteForm .row{grid-template-columns:1fr}
+  .footer-inner{flex-wrap:wrap;gap:13px}#footerSlogan{width:100%;order:3;margin:0}
 }
-
-setInterval(
-  () =>
-    DATA &&
-    slides.length &&
-    show(current + 1),
-  6500
-);
-
-init();
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
